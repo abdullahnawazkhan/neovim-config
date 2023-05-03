@@ -34,6 +34,9 @@ call plug#begin("~/.vim/plugged")
     Plug 'romgrk/barbar.nvim'
 
     Plug 'mfussenegger/nvim-dap'
+    Plug 'rcarriga/nvim-dap-ui'
+
+    Plug 'folke/todo-comments.nvim', {'branch': 'neovim-pre-0.8.0'}
 call plug#end()
 
 set termguicolors
@@ -79,6 +82,8 @@ let NERDTreeShowHidden=1
 " set backupdir=~/.cache/vim " Directory to store backup files.
 
 let mapleader = " "
+nnoremap <leader> <cmd>TodoTelescope<cr>
+
 nnoremap <leader>f <cmd>Telescope find_files hidden=true<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
 
@@ -93,32 +98,32 @@ nnoremap <leader>8 <Cmd>BufferGoto 8<CR>
 
 nnoremap <leader>b <Cmd>Git blame<CR>
 
-nnoremap <Leader>t :call SmartNERDTreeToggle()<CR>
+nnoremap <Leader>p :call SmartNERDTreeToggle()<CR>
 " if a file is open in current_buffer will find that file in NERDTree
 " if current_buffer is empty or current_buffer is NERDTree then it will simply toggle
 function! SmartNERDTreeToggle()                   
-    " @% returns the name of the file
-    " in the scenario of NERDTree, it will concat a number with it '_1'
-    " the number represents the instance number of nerdtree
-    if @% == "" || @%[0:len(@%)-3] == "NERD_tree"
-        NERDTreeToggle                      
-    else                                    
-        NERDTreeFind                        
-    endif                                   
+" @% returns the name of the file
+" in the scenario of NERDTree, it will concat a number with it '_1'
+" the number represents the instance number of nerdtree
+if @% == "" || @%[0:len(@%)-3] == "NERD_tree"
+NERDTreeToggle                      
+else                                    
+NERDTreeFind                        
+endif                                   
 endfun
 
 nnoremap <Leader>v <Cmd>Gdiffsplit<CR>
 
 lua << EOF
 require('telescope').setup{
-    defaults = {
-        file_ignore_patterns={'node_modules', '.git/'},
-        mappings = {
-            n = {
-                ["<S-CR>"] = "select_tab"
-            }
+defaults = {
+    file_ignore_patterns={'node_modules', '.git/', 'sequelize/'},
+    mappings = {
+        n = {
+            ["<S-CR>"] = "select_tab"
         }
     }
+}
 }
 EOF
 
@@ -143,7 +148,7 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
+" Make <CR> auto-select the first completion item and notify 
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -253,8 +258,15 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 vnoremap p "_dP
 
+let g:everforest_background = 'dark'
+
+lua << EOF
+  require("todo-comments").setup {
+    highlight = {
+        exclude = {'!**/sequelize'}, -- list of file types to exclude highlighting
+      }
+  }
+EOF
