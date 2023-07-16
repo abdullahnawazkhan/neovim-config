@@ -31,3 +31,4 @@ vim.cmd('set ttyfast')
 -- vim.opt.relativenumber=true
 vim.opt.smartindent=true
 vim.opt.hlsearch=false
+vim.cmd('vnoremap p "_dP')
