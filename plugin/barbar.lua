@@ -4,8 +4,6 @@ require'barbar'.setup {
   animation = false
 }
 
-vim.keymap.set('n', '<leader>w', '<Cmd>BufferClose<CR>')
-
 vim.keymap.set('n', '<leader>1', '<Cmd>BufferGoto 1<CR>')
 vim.keymap.set('n', '<leader>2', '<Cmd>BufferGoto 2<CR>')
 vim.keymap.set('n', '<leader>3', '<Cmd>BufferGoto 3<CR>')
