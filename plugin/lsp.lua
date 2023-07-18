@@ -4,8 +4,13 @@ lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
 end)
 
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+require("lsp_signature").setup({
+  hint_enable = false,
+  handler_opts = {
+    border = "none"   -- double, rounded, single, shadow, none, or a table of borders
+  },
+})
 
 lsp.setup()
 
@@ -15,6 +20,10 @@ local cmp_action = require('lsp-zero').cmp_action()
 local cmp_select_opts = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup({
+  preselect = 'item',
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  },
   mapping = {
     -- `Enter` key to confirm completion
     ['<CR>'] = cmp.mapping.confirm({select = false}),

@@ -6,6 +6,9 @@ require("nvim-tree").setup()
 -- OR setup with some options
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
+  git = {
+    enable = false
+  },
   view = {
     width = 30,
   },
@@ -13,7 +16,7 @@ require("nvim-tree").setup({
     group_empty = true,
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
   },
   actions = {
     open_file = {

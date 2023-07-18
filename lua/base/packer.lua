@@ -25,6 +25,8 @@ return require('packer').startup(function(use)
       run = ":MasonUpdate" -- :MasonUpdate updates registry contents
     }
 
+    use 'ray-x/lsp_signature.nvim'
+
     use {
       'VonHeikemen/lsp-zero.nvim',
       branch = 'v2.x',
