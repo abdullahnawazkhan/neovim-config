@@ -28,6 +28,8 @@ vim.cmd('set mouse=a')
 vim.cmd('set clipboard=unnamedplus')
 vim.cmd('set cursorline')          
 vim.cmd('set ttyfast')            
+vim.cmd('set nobackup nowritebackup');
+vim.cmd('set noswapfile')
 -- vim.opt.relativenumber=true
 vim.opt.smartindent=true
 vim.opt.hlsearch=false
