@@ -1,7 +1,9 @@
 local lsp = require('lsp-zero').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+  lsp.default_keymaps({
+    buffer = bufnr
+  })
 end)
 
 
@@ -11,6 +13,15 @@ require("lsp_signature").setup({
     border = "none"   -- double, rounded, single, shadow, none, or a table of borders
   },
 })
+
+
+-- Define a function to go to definition in a vertical split
+local function go_to_definition_split()
+  vim.cmd('vsplit')                -- Open a new vertical split
+  vim.lsp.buf.definition()         -- Go to the definition in the new split
+end
+
+vim.keymap.set('n', 'gD', go_to_definition_split, { noremap = true, silent = true })
 
 lsp.setup()
 
@@ -38,3 +49,4 @@ cmp.setup({
     ['<C-b>'] = cmp_action.luasnip_jump_backward(),
   }
 })
+
