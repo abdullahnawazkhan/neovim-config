@@ -23,6 +23,27 @@ end
 
 vim.keymap.set('n', 'gD', go_to_definition_split, { noremap = true, silent = true })
 
+local function go_to_first_definition()
+  vim.lsp.buf.definition({
+    on_list = function(options)
+      if options.items and #options.items > 1 then
+        -- Jump to first item. You can do whatever you want here, such as filtering out React d.ts.
+        vim.fn.setqflist({}, " ", options) -- Close quicifix list
+        vim.cmd("cfirst") -- Jump to first
+      elseif options.items and #options.items == 1 then
+        local item = options.items[1]
+        vim.fn.setqflist({ item }, "r")
+        vim.cmd("cfirst")
+      else
+        print("No definition found")
+      end
+    end,
+  })
+end
+
+-- usage
+vim.keymap.set("n", "gd", go_to_first_definition)
+
 lsp.setup()
 
 -- You need to setup `cmp` after lsp-zero

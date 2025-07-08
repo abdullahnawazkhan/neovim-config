@@ -38,5 +38,16 @@ end
 
 dapui.setup()
 
-vim.keymap.set('n', '<leader>td', '<cmd>lua require"dap".terminate()<cr><cmd>lua require"dapui".toggle()<cr>', {})
+-- vim.keymap.set('n', '<leader>td', '<cmd>lua require"dap".terminate()<cr><cmd>lua require"dapui".toggle()<cr>', {})
 vim.keymap.set('n', '<leader>tb', '<cmd>lua require"dap".toggle_breakpoint()<cr>', {})
+
+vim.keymap.set('n', '<leader>td', function()
+  -- Disable Copilot (if active)
+  if vim.fn.exists(":CopilotChatStop") == 2 then
+    vim.cmd("CopilotChatStop")
+  end
+
+  -- Terminate DAP and toggle DAP UI
+  require("dap").terminate()
+  require("dapui").toggle()
+end, {})

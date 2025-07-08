@@ -1,3 +1,3 @@
 require('base.remap')
-require('base.packer')
+require('base.lazy')
 require('base.set')

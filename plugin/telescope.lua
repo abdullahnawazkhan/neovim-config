@@ -28,6 +28,23 @@ require('telescope').setup{
 local builtin = require('telescope.builtin')
 require("telescope").load_extension "file_browser"
 
-vim.keymap.set('n', '<leader>f', '<cmd>Telescope find_files<cr>', {})
-vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+-- vim.keymap.set('n', '<leader>f', '<cmd>Telescope find_files<cr>', {})
+vim.keymap.set('n', '<leader>f', function()
+  -- Disable Copilot to avoid interference
+  if vim.fn.exists(":CopilotChatStop") == 2 then
+    vim.cmd("CopilotChatStop")
+  end
+
+  -- Launch Telescope find_files
+  vim.cmd("Telescope find_files")
+end, {})
+-- vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>g', function()
+  if vim.fn.exists(":CopilotChatStop") == 2 then
+    vim.cmd("CopilotChatStop")
+  end
+
+  builtin.live_grep()
+end, {})
+
 vim.keymap.set('n', '<leader>p', '<cmd>Telescope file_browser<cr>', {})

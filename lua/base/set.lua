@@ -34,3 +34,4 @@ vim.cmd('set noswapfile')
 vim.opt.smartindent=true
 vim.opt.hlsearch=false
 vim.cmd('vnoremap p "_dP')
+vim.g.copilot_assume_mapped = true
